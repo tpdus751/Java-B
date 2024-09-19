@@ -76,12 +76,14 @@ public class Controler {
 					}
 					break;
 				case 4:
+					int past_money = 0;
 					while(true) {
 						boolean isExists = false;
 						account_num = v.getAccountNumByKeyboard("계좌번호 : ");
 						for (int i = 0; i < ac.getSeq(); i++) {
 							ac = bankApp.getAccount(i);
 							if (account_num.equals(ac.getAc_number())) {
+								past_money = ac.getMoney();
 								isExists = true;
 							}
 						}
@@ -92,16 +94,20 @@ public class Controler {
 						}
 					}
 					
-					int popMoney = v.getMoneyByKeyboard("출금액 : ");
+					int popMoney = v.popMoneyByKeyboard("출금액 : ", past_money);
 					
-					for (int i = 0; i < ac.getSeq(); i++) {
-						ac = bankApp.getAccount(i);
-						if (account_num.equals(ac.getAc_number())) {
-							ac.setMoney(ac.getMoney() - popMoney);
-							break;
+					if (popMoney == 0) {
+						v.showMessage("결과 : 출금에 실패하였습니다.");
+					} else {
+						for (int i = 0; i < ac.getSeq(); i++) {
+							ac = bankApp.getAccount(i);
+							if (account_num.equals(ac.getAc_number())) {
+								ac.setMoney(ac.getMoney() - popMoney);
+								break;
+							}
 						}
+						v.showMessage("결과 : 출금이 성공되었습니다.");
 					}
-					v.showMessage("결과 : 출금이 성공되었습니다.");
 					break;
 				case 5:
 					isRewind = false;

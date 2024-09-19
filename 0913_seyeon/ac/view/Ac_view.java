@@ -83,4 +83,42 @@ public class Ac_view {
 		
 	}
 	
+	public int popMoneyByKeyboard(String string, int past_money) {
+		boolean isTrue = true;
+		int money = 0;
+		while(isTrue) {
+			
+			if (past_money == 0) {
+				showMessage("계좌 잔액이 없습니다.");
+				break;
+			} else {
+				System.out.print(string);
+				
+				try {
+					money = input.nextInt();	
+				} catch (Exception e) {
+					showMessage("숫자로 된 금액을 입력하세요.");
+					continue;
+				}
+				if (money < 0) {
+					showMessage("0 보다 큰 숫자를 입력하세요.");
+				} else if (money == 0) {
+					showMessage("0원은 출금하실 수 없습니다.");
+				} else if (money > past_money) {
+					showMessage("출금 금액을 초과하였습니다.");
+				} else if (money > 1000000) {
+					showMessage("최대 1,000,000원 까지 출금 가능합니다.");
+				} else {
+					break;
+				}
+			}
+			}
+			
+			
+		System.out.println();
+		return money;
+		
+		
+	}
+	
 }
